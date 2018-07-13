@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.saic.business.center.order.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.saic.business.center.order.entity.Order" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_city_code" property="orderCityCode" jdbcType="VARCHAR" />
+    <result column="passenger_uid" property="passengerUid" jdbcType="VARCHAR" />
+    <result column="passenger_name" property="passengerName" jdbcType="VARCHAR" />
+    <result column="passenger_mobile" property="passengerMobile" jdbcType="VARCHAR" />
+    <result column="driver_uid" property="driverUid" jdbcType="VARCHAR" />
+    <result column="driver_name" property="driverName" jdbcType="VARCHAR" />
+    <result column="driver_mobile" property="driverMobile" jdbcType="VARCHAR" />
+    <result column="vehicle_no" property="vehicleNo" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="estimate_path_id" property="estimatePathId" jdbcType="VARCHAR" />
+    <result column="estimate_price" property="estimatePrice" jdbcType="DECIMAL" />
+    <result column="actual_path_id" property="actualPathId" jdbcType="VARCHAR" />
+    <result column="actual_base_fee" property="actualBaseFee" jdbcType="DECIMAL" />
+    <result column="actual_ext_fee" property="actualExtFee" jdbcType="DECIMAL" />
+    <result column="ar_amount" property="arAmount" jdbcType="DECIMAL" />
+    <result column="rcvd_amount" property="rcvdAmount" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="payment_status" property="paymentStatus" jdbcType="INTEGER" />
+    <result column="order_type_id" property="orderTypeId" jdbcType="INTEGER" />
+    <result column="complaints_flag" property="complaintsFlag" jdbcType="VARCHAR" />
+    <result column="evaluation_flag" property="evaluationFlag" jdbcType="VARCHAR" />
+    <result column="invoice_flag" property="invoiceFlag" jdbcType="INTEGER" />
+    <result column="exception_flag" property="exceptionFlag" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="gohome_flag" property="gohomeFlag" jdbcType="INTEGER" />
+    <result column="newest_event_code" property="newestEventCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_no, create_time, update_time, order_city_code, passenger_uid, passenger_name, 
+    passenger_mobile, driver_uid, driver_name, driver_mobile, vehicle_no, order_time, 
+    estimate_path_id, estimate_price, actual_path_id, actual_base_fee, actual_ext_fee, 
+    ar_amount, rcvd_amount, order_status, payment_status, order_type_id, complaints_flag, 
+    evaluation_flag, invoice_flag, exception_flag, delete_flag, gohome_flag, newest_event_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.saic.business.center.order.entity.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.saic.business.center.order.entity.OrderExample" >
+    delete from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.saic.business.center.order.entity.Order" >
+    insert into t_order (id, order_no, create_time, 
+      update_time, order_city_code, passenger_uid, 
+      passenger_name, passenger_mobile, driver_uid, 
+      driver_name, driver_mobile, vehicle_no, 
+      order_time, estimate_path_id, estimate_price, 
+      actual_path_id, actual_base_fee, actual_ext_fee, 
+      ar_amount, rcvd_amount, order_status, 
+      payment_status, order_type_id, complaints_flag, 
+      evaluation_flag, invoice_flag, exception_flag, 
+      delete_flag, gohome_flag, newest_event_code
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{orderCityCode,jdbcType=VARCHAR}, #{passengerUid,jdbcType=VARCHAR}, 
+      #{passengerName,jdbcType=VARCHAR}, #{passengerMobile,jdbcType=VARCHAR}, #{driverUid,jdbcType=VARCHAR}, 
+      #{driverName,jdbcType=VARCHAR}, #{driverMobile,jdbcType=VARCHAR}, #{vehicleNo,jdbcType=VARCHAR}, 
+      #{orderTime,jdbcType=TIMESTAMP}, #{estimatePathId,jdbcType=VARCHAR}, #{estimatePrice,jdbcType=DECIMAL}, 
+      #{actualPathId,jdbcType=VARCHAR}, #{actualBaseFee,jdbcType=DECIMAL}, #{actualExtFee,jdbcType=DECIMAL}, 
+      #{arAmount,jdbcType=DECIMAL}, #{rcvdAmount,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, 
+      #{paymentStatus,jdbcType=INTEGER}, #{orderTypeId,jdbcType=INTEGER}, #{complaintsFlag,jdbcType=VARCHAR}, 
+      #{evaluationFlag,jdbcType=VARCHAR}, #{invoiceFlag,jdbcType=INTEGER}, #{exceptionFlag,jdbcType=INTEGER}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{gohomeFlag,jdbcType=INTEGER}, #{newestEventCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.saic.business.center.order.entity.Order" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="orderCityCode != null" >
+        order_city_code,
+      </if>
+      <if test="passengerUid != null" >
+        passenger_uid,
+      </if>
+      <if test="passengerName != null" >
+        passenger_name,
+      </if>
+      <if test="passengerMobile != null" >
+        passenger_mobile,
+      </if>
+      <if test="driverUid != null" >
+        driver_uid,
+      </if>
+      <if test="driverName != null" >
+        driver_name,
+      </if>
+      <if test="driverMobile != null" >
+        driver_mobile,
+      </if>
+      <if test="vehicleNo != null" >
+        vehicle_no,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="estimatePathId != null" >
+        estimate_path_id,
+      </if>
+      <if test="estimatePrice != null" >
+        estimate_price,
+      </if>
+      <if test="actualPathId != null" >
+        actual_path_id,
+      </if>
+      <if test="actualBaseFee != null" >
+        actual_base_fee,
+      </if>
+      <if test="actualExtFee != null" >
+        actual_ext_fee,
+      </if>
+      <if test="arAmount != null" >
+        ar_amount,
+      </if>
+      <if test="rcvdAmount != null" >
+        rcvd_amount,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status,
+      </if>
+      <if test="orderTypeId != null" >
+        order_type_id,
+      </if>
+      <if test="complaintsFlag != null" >
+        complaints_flag,
+      </if>
+      <if test="evaluationFlag != null" >
+        evaluation_flag,
+      </if>
+      <if test="invoiceFlag != null" >
+        invoice_flag,
+      </if>
+      <if test="exceptionFlag != null" >
+        exception_flag,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="gohomeFlag != null" >
+        gohome_flag,
+      </if>
+      <if test="newestEventCode != null" >
+        newest_event_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCityCode != null" >
+        #{orderCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerUid != null" >
+        #{passengerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerName != null" >
+        #{passengerName,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerMobile != null" >
+        #{passengerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="driverUid != null" >
+        #{driverUid,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null" >
+        #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverMobile != null" >
+        #{driverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleNo != null" >
+        #{vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estimatePathId != null" >
+        #{estimatePathId,jdbcType=VARCHAR},
+      </if>
+      <if test="estimatePrice != null" >
+        #{estimatePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPathId != null" >
+        #{actualPathId,jdbcType=VARCHAR},
+      </if>
+      <if test="actualBaseFee != null" >
+        #{actualBaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="actualExtFee != null" >
+        #{actualExtFee,jdbcType=DECIMAL},
+      </if>
+      <if test="arAmount != null" >
+        #{arAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rcvdAmount != null" >
+        #{rcvdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentStatus != null" >
+        #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderTypeId != null" >
+        #{orderTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="complaintsFlag != null" >
+        #{complaintsFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationFlag != null" >
+        #{evaluationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceFlag != null" >
+        #{invoiceFlag,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionFlag != null" >
+        #{exceptionFlag,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="gohomeFlag != null" >
+        #{gohomeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="newestEventCode != null" >
+        #{newestEventCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.saic.business.center.order.entity.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderCityCode != null" >
+        order_city_code = #{record.orderCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passengerUid != null" >
+        passenger_uid = #{record.passengerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passengerName != null" >
+        passenger_name = #{record.passengerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passengerMobile != null" >
+        passenger_mobile = #{record.passengerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverUid != null" >
+        driver_uid = #{record.driverUid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverName != null" >
+        driver_name = #{record.driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverMobile != null" >
+        driver_mobile = #{record.driverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleNo != null" >
+        vehicle_no = #{record.vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderTime != null" >
+        order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.estimatePathId != null" >
+        estimate_path_id = #{record.estimatePathId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.estimatePrice != null" >
+        estimate_price = #{record.estimatePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualPathId != null" >
+        actual_path_id = #{record.actualPathId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actualBaseFee != null" >
+        actual_base_fee = #{record.actualBaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualExtFee != null" >
+        actual_ext_fee = #{record.actualExtFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.arAmount != null" >
+        ar_amount = #{record.arAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rcvdAmount != null" >
+        rcvd_amount = #{record.rcvdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentStatus != null" >
+        payment_status = #{record.paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderTypeId != null" >
+        order_type_id = #{record.orderTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.complaintsFlag != null" >
+        complaints_flag = #{record.complaintsFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluationFlag != null" >
+        evaluation_flag = #{record.evaluationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceFlag != null" >
+        invoice_flag = #{record.invoiceFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.exceptionFlag != null" >
+        exception_flag = #{record.exceptionFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.gohomeFlag != null" >
+        gohome_flag = #{record.gohomeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.newestEventCode != null" >
+        newest_event_code = #{record.newestEventCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      order_city_code = #{record.orderCityCode,jdbcType=VARCHAR},
+      passenger_uid = #{record.passengerUid,jdbcType=VARCHAR},
+      passenger_name = #{record.passengerName,jdbcType=VARCHAR},
+      passenger_mobile = #{record.passengerMobile,jdbcType=VARCHAR},
+      driver_uid = #{record.driverUid,jdbcType=VARCHAR},
+      driver_name = #{record.driverName,jdbcType=VARCHAR},
+      driver_mobile = #{record.driverMobile,jdbcType=VARCHAR},
+      vehicle_no = #{record.vehicleNo,jdbcType=VARCHAR},
+      order_time = #{record.orderTime,jdbcType=TIMESTAMP},
+      estimate_path_id = #{record.estimatePathId,jdbcType=VARCHAR},
+      estimate_price = #{record.estimatePrice,jdbcType=DECIMAL},
+      actual_path_id = #{record.actualPathId,jdbcType=VARCHAR},
+      actual_base_fee = #{record.actualBaseFee,jdbcType=DECIMAL},
+      actual_ext_fee = #{record.actualExtFee,jdbcType=DECIMAL},
+      ar_amount = #{record.arAmount,jdbcType=DECIMAL},
+      rcvd_amount = #{record.rcvdAmount,jdbcType=DECIMAL},
+      order_status = #{record.orderStatus,jdbcType=INTEGER},
+      payment_status = #{record.paymentStatus,jdbcType=INTEGER},
+      order_type_id = #{record.orderTypeId,jdbcType=INTEGER},
+      complaints_flag = #{record.complaintsFlag,jdbcType=VARCHAR},
+      evaluation_flag = #{record.evaluationFlag,jdbcType=VARCHAR},
+      invoice_flag = #{record.invoiceFlag,jdbcType=INTEGER},
+      exception_flag = #{record.exceptionFlag,jdbcType=INTEGER},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      gohome_flag = #{record.gohomeFlag,jdbcType=INTEGER},
+      newest_event_code = #{record.newestEventCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.saic.business.center.order.entity.Order" >
+    update t_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCityCode != null" >
+        order_city_code = #{orderCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerUid != null" >
+        passenger_uid = #{passengerUid,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerName != null" >
+        passenger_name = #{passengerName,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerMobile != null" >
+        passenger_mobile = #{passengerMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="driverUid != null" >
+        driver_uid = #{driverUid,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null" >
+        driver_name = #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverMobile != null" >
+        driver_mobile = #{driverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleNo != null" >
+        vehicle_no = #{vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estimatePathId != null" >
+        estimate_path_id = #{estimatePathId,jdbcType=VARCHAR},
+      </if>
+      <if test="estimatePrice != null" >
+        estimate_price = #{estimatePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPathId != null" >
+        actual_path_id = #{actualPathId,jdbcType=VARCHAR},
+      </if>
+      <if test="actualBaseFee != null" >
+        actual_base_fee = #{actualBaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="actualExtFee != null" >
+        actual_ext_fee = #{actualExtFee,jdbcType=DECIMAL},
+      </if>
+      <if test="arAmount != null" >
+        ar_amount = #{arAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rcvdAmount != null" >
+        rcvd_amount = #{rcvdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status = #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderTypeId != null" >
+        order_type_id = #{orderTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="complaintsFlag != null" >
+        complaints_flag = #{complaintsFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationFlag != null" >
+        evaluation_flag = #{evaluationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceFlag != null" >
+        invoice_flag = #{invoiceFlag,jdbcType=INTEGER},
+      </if>
+      <if test="exceptionFlag != null" >
+        exception_flag = #{exceptionFlag,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="gohomeFlag != null" >
+        gohome_flag = #{gohomeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="newestEventCode != null" >
+        newest_event_code = #{newestEventCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.saic.business.center.order.entity.Order" >
+    update t_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      order_city_code = #{orderCityCode,jdbcType=VARCHAR},
+      passenger_uid = #{passengerUid,jdbcType=VARCHAR},
+      passenger_name = #{passengerName,jdbcType=VARCHAR},
+      passenger_mobile = #{passengerMobile,jdbcType=VARCHAR},
+      driver_uid = #{driverUid,jdbcType=VARCHAR},
+      driver_name = #{driverName,jdbcType=VARCHAR},
+      driver_mobile = #{driverMobile,jdbcType=VARCHAR},
+      vehicle_no = #{vehicleNo,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      estimate_path_id = #{estimatePathId,jdbcType=VARCHAR},
+      estimate_price = #{estimatePrice,jdbcType=DECIMAL},
+      actual_path_id = #{actualPathId,jdbcType=VARCHAR},
+      actual_base_fee = #{actualBaseFee,jdbcType=DECIMAL},
+      actual_ext_fee = #{actualExtFee,jdbcType=DECIMAL},
+      ar_amount = #{arAmount,jdbcType=DECIMAL},
+      rcvd_amount = #{rcvdAmount,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      payment_status = #{paymentStatus,jdbcType=INTEGER},
+      order_type_id = #{orderTypeId,jdbcType=INTEGER},
+      complaints_flag = #{complaintsFlag,jdbcType=VARCHAR},
+      evaluation_flag = #{evaluationFlag,jdbcType=VARCHAR},
+      invoice_flag = #{invoiceFlag,jdbcType=INTEGER},
+      exception_flag = #{exceptionFlag,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      gohome_flag = #{gohomeFlag,jdbcType=INTEGER},
+      newest_event_code = #{newestEventCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
